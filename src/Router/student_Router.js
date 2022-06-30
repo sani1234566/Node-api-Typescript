@@ -4,6 +4,11 @@ const Student = require("../models/students");
 
 ///////////// All http  method for using is async wait ///////////////////
 
+router.get('/' ,async(req,res,next)=>{
+  res.send("<h1> Node js............ </h1>");
+  next();
+})
+
 router.post("/students", async (req, res) => {
   try {
     const user = new Student(req.body);
