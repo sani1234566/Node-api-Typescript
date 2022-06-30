@@ -25,9 +25,9 @@ router.post("/students", async (req, res) => {
 router.get("/students", async (req, res) => {
   // console.log("required",req)
   try {
-    const users = await Student.find();
+    // const users = await Student.find();
     // console.log("get", users);
-    res.status(200).send("<h1> students .................</h1>");
+    res.send("<h1> students .................</h1>");
   } catch (error) {
     res.status(500).send(error);
   }
