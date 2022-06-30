@@ -1,6 +1,9 @@
 require("dotenv").config();
 const express = require("express");
-const port = process.env.PORT || 8080;
+// const port = process.env.PORT || 3000;
+
+const port = process.env.MONGODB_URI  || CLUSTER_DB;
+
 require("./db/dbLocal_conn");
 // require("./db/server");
 const studentRouter = require("./Router/student_Router");
