@@ -1,14 +1,11 @@
 require("dotenv").config();
 const express = require("express");
-// const port = process.env.PORT || 3000;
-
-const port = process.env.MONGODB_URI  || CLUSTER_DB;
-
-require("./db/dbLocal_conn");
+const port = process.env.PORT || 3000;
+require("./src/db/dbLocal_conn");
 // require("./db/server");
-const studentRouter = require("./Router/student_Router");
-const RegisterRouter = require("./Router/Register_router");
-const LoginRouter = require("./Router/Login_router");
+const studentRouter = require("./src/Router/student_Router");
+const RegisterRouter = require("./src/Router/Register_router");
+const LoginRouter = require("./src/Router/Login_router");
 const cookieParser = require("cookie-parser");
 
 // console.log("secrekKey",process.env.SECRET_KEY);
