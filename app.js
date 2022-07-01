@@ -18,7 +18,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {customCss}));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {customCss}));
 
 app.use(LoginRouter, RegisterRouter, studentRouter);
 
