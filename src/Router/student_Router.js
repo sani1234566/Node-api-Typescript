@@ -4,10 +4,10 @@ const Student = require("../models/students");
 
 ///////////// All http  method for using is async wait ///////////////////
 
-router.get('/' ,async(req,res,next)=>{
-  res.send("<h1> Node js............ </h1>");
-  next();
-})
+// router.get("/", async (req, res, next) => {
+//   res.send("<h1> Node js............ </h1>");
+//   next();
+// });
 
 router.post("/students", async (req, res) => {
   try {
@@ -26,7 +26,7 @@ router.get("/students", async (req, res) => {
   // console.log("required",req)
   try {
     const users = await Student.find();
-    console.log("get", users);
+    // console.log("get", users);
     res.status(200).send(users);
   } catch (error) {
     res.status(500).send(error);

@@ -10,7 +10,7 @@ router.post("/login", async (req, res) => {
     const emails = req.body.email;
     const pass = req.body.password;
     console.log(`Email id is ${emails} and password is ${pass}`);
-    const userCredentials = await RegisterSchema.findOne({email:email});
+    const userCredentials = await RegisterSchema.findOne({ email: email });
     console.log(userCredentials);
     console.log("password", userCredentials.password);
     // userCredentials.password === pass before  normal password condtion used
