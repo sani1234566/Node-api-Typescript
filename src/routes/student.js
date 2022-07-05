@@ -46,6 +46,45 @@ router.get("/students/:id", async (req, res) => {
   }
 });
 
+
+/////////////////////// get students By search by single Filelds key Id data//////////////// //
+
+router.get("/students-search/:key", async (req, res) => {
+  try {
+    // console.log(`search?query=${req.params.key}`);
+    const users = await Student.find({
+      "$or":[
+        {
+         // email_Id :{$regex:req.params.key}, now using email for search
+          name :{$regex:req.params.key}
+        }]
+    });
+    console.log("gets", users);
+    res.status(200).send(users);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+
+/////////////////////// get students By search querry for multiple filelds Id data//////////////// //
+
+
+router.get("/students-query", async (req, res) => {
+  try {
+    let searchQuery = req.query;
+    console.log("search? name=:", searchQuery);
+    const users = await Student.find(searchQuery);
+    console.log("students Query=:", users);
+    // console.log("data Querry",users[0].email_Id);
+    res.status(200).send(searchQuery);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+
+
 ////////////////// update students for patch value prefix filelds data/////////////////////////////////
 
 router.patch("/students/:id", async (req, res) => {
@@ -60,6 +99,24 @@ router.patch("/students/:id", async (req, res) => {
     res.status(404).send(error);
   }
 });
+
+////////////////// update students for put value prefix filelds data/////////////////////////////////
+
+router.put("/students/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    console.log(req.params);
+    const update = await Student.updateOne(
+      {_id:req.params.id},
+      {$set:req.body}
+    )
+    console.log(update);
+    res.send(update).status(201);
+  } catch (error) {
+    res.status(404).send(error);
+  }
+});
+
 
 ////////////////// Delete students data/////////////////////////////////
 
@@ -79,3 +136,4 @@ router.delete("/students/:id", async (req, res) => {
 });
 
 module.exports = router;
+

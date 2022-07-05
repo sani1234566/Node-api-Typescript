@@ -14,7 +14,7 @@
     },
     "schemes": ["http"],
     "host": "http://localhost:3000",
-    "basePath": "/api",
+    "basePath": "/",
     "paths" : {
         "/student" : {
             "get" : {
@@ -132,10 +132,10 @@
                 }
             }
         },
-        "/todo/{id}" : {
+        "/student/{id}" : {
             "delete" : {
-                "summary" : "Delete the task",
-                "description": "Delete the task",
+                "summary" : "Delete students",
+                "description": "Delete students",
                 "produces": ["application/json"],
                 "parameters": [
                     {
