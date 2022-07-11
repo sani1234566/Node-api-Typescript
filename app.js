@@ -13,7 +13,7 @@ const swaggerDocument = require('./swagger.json');
 const customCss = fs.readFileSync((process.cwd()+"/swagger.css"), 'utf8');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const customer = require("./src/models/cutomer");
+const customer = require("./src/routes/customer_view");
 
 
 // console.log("secrekKey",process.env.SECRET_KEY);
@@ -22,13 +22,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(customer);
-app.use(RegisterRouter, studentRouter);
 
-// app.use('/loan', customer);
-
-
-
+app.use(RegisterRouter, studentRouter ,customer);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {customCss}));
 
@@ -44,5 +39,3 @@ app.listen(port, () => {
     `Your Connection is Success And Port Number is: https://localhost:${port}`
   );
 });
-
-
