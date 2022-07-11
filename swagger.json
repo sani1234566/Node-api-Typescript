@@ -1,36 +1,53 @@
-{
+ {
     "swagger": "2.0",
+    "definitions":{
     "info": {
-        "description": "This is a simple example NodeJS API project to demonstrate Swagger Documentation",
+        "description": "NodeJS CRUD API project for & Register ",
         "version": "1.0.0",
-        "title": "Node Js Crud Api",
-        "contact": {
-            "email": "demo@gmail.com"
-        },
-        "license": {
-            "name": "Node 2.0",
-            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-        }
-    },
-    "schemes": ["http"],
+        "title": "Node Js Crud Api"
+    }
+},
+    "schemes": ["http" ,"https"],
     "host": "http://localhost:3000",
-    "basePath": "/",
     "paths" : {
         "/student" : {
             "get" : {
                 "summary" : "Get all Students Details",
                 "description": "Get all the tasks",
                 "produces": ["application/json"],
-                "parameters": [],
                 "responses": {
                     "200": {
                         "description": "successful operation",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/todosResponse"
+                        "schema":{
+                            "type":"object",
+                            "properties":{
+                                "_id":{
+                                    "type":"string",
+                                    "description":"Get all Students",
+                                    "examples":"62bd4744b528cc6ffdbb9747"
+                                },
+                                "name":{
+                                    "type":"string",
+                                    "description":"Get all Students",
+                                    "examples":"raj"
+                                },
+                                "email_Id":{
+                                    "type":"string",
+                                    "description":"Get all Students",
+                                    "examples":"raj1234@gmail.com"
+                                },
+                                "phone_Number":{
+                                    "type":"number",
+                                    "description":"Get Students phone_Number",
+                                    "examples":"7412589632"
+                                },
+                                "address":{
+                                    "type":"string",
+                                    "description":"Get Students address",
+                                    "examples":"demo test 34 555"
+                                }
                             }
-                        }
+                            }
                     },
                     "400": {
                         "description": "Invalid status value",
@@ -164,51 +181,6 @@
                     }
                 }
             }
-        }
-    }, 
-    "definitions": {
-        "StudentResponse": {
-            "type": "object",
-            "properties": {
-                "id": {
-                     "type": "integer"
-                },
-                "task": {
-                    "type": "string"
-                },
-                "assignee": {
-                    "type": "string"
-                },
-                "status": {
-                    "type": "string"
-                }
-            }
-        },
-        "Task": {
-            "type": "object",
-            "properties": {
-                "task": {
-                    "type": "string"
-                },
-                "assignee": {
-                    "type": "string"
-                },
-                "status": {
-                    "type": "string"
-                }
-            }
-        },
-        "InvalidResponse": {
-            "type": "object",
-            "properties": {
-                "statusCode": {
-                    "type": "string"
-                },
-                "message": {
-                    "type": "string"
-                }
-            }
-
         }
     }
 }

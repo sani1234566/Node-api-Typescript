@@ -1,14 +1,15 @@
+
 const express = require("express");
 const router = new express.Router();
-const Student = require("../models/students");
+const Customer = require("../models/cutomer");
 
 ///////////// All http  method for using is async wait ///////////////////
 
 
-router.post("/students", async (req, res) => {
+router.post("/customer", async (req, res) => {
   try {
-    const user = new Student(req.body);
-    // console.log(user);
+    const user = new Customer(req.body);
+    console.log(user);
     await user.save();
     res.status(201).send(user);
   } catch (error) {
@@ -16,12 +17,12 @@ router.post("/students", async (req, res) => {
   }
 });
 
-/////////////////////// get all students data//////////////// //
+/////////////////////// get all Customer data//////////////// //
 
-router.get("/students", async (req, res) => {
+router.get("/customer", async (req, res) => {
   // console.log("required",req)
   try {
-    const users = await Student.find();
+    const users = await Customer.find();
     // console.log("get", users);
     res.status(200).send(users);
   } catch (error) {
@@ -29,12 +30,12 @@ router.get("/students", async (req, res) => {
   }
 });
 
-/////////////////////// get students By Id data//////////////// //
+/////////////////////// get Customer By Id data//////////////// //
 
-router.get("/students/:id", async (req, res) => {
+router.get("/customer/:id", async (req, res) => {
   try {
     // console.log(req.params.id);
-    const users = await Student.findById(req.params.id);
+    const users = await Customer.findById(req.params.id);
     // console.log("get", users);
     res.status(200).send(users);
   } catch (error) {
@@ -42,12 +43,12 @@ router.get("/students/:id", async (req, res) => {
   }
 });
 
-/////////////////////// get students By search by single Filelds key Id data//////////////// //
+/////////////////////// get Customer By search by single Filelds key Id data//////////////// //
 
-router.get("/students-search/:key", async (req, res) => {
+router.get("/customer-search/:key", async (req, res) => {
   try {
     // console.log(`search?query=${req.params.key}`);
-    const users = await Student.find({
+    const users = await Customer.find({
       $or: [
         {
           // email_Id :{$regex:req.params.key}, now using email for search
@@ -62,14 +63,14 @@ router.get("/students-search/:key", async (req, res) => {
   }
 });
 
-/////////////////////// get students By search querry for multiple filelds Id data//////////////// //
+/////////////////////// get Customer By search querry for multiple filelds Id data//////////////// //
 
-router.get("/students-query", async (req, res) => {
+router.get("/customer-query", async (req, res) => {
   try {
     let searchQuery = req.query;
     console.log("search? name=:", searchQuery);
-    const users = await Student.find(searchQuery);
-    console.log("students Query=:", users);
+    const users = await Customer.find(searchQuery);
+    console.log("customers Query=:", users);
     // console.log("data Querry",users[0].email_Id);
     res.status(200).send(searchQuery);
   } catch (error) {
@@ -77,12 +78,12 @@ router.get("/students-query", async (req, res) => {
   }
 });
 
-////////////////// update students for patch value prefix filelds data/////////////////////////////////
+////////////////// update Customer for patch value prefix filelds data/////////////////////////////////
 
-router.patch("/students/:id", async (req, res) => {
+router.patch("/customer/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    const update = await Student.findByIdAndUpdate(id, req.body, {
+    const update = await Customer.findByIdAndUpdate(id, req.body, {
       new: true,
     });
     // console.log(update);
@@ -92,13 +93,13 @@ router.patch("/students/:id", async (req, res) => {
   }
 });
 
-////////////////// update students for put value prefix filelds data/////////////////////////////////
+////////////////// update Customer for put value prefix filelds data/////////////////////////////////
 
-router.put("/students/:id", async (req, res) => {
+router.put("/customer/:id", async (req, res) => {
   try {
     const id = req.params.id;
     console.log(req.params);
-    const update = await Student.updateOne(
+    const update = await Customer.updateOne(
       { _id: req.params.id },
       { $set: req.body }
     );
@@ -109,14 +110,14 @@ router.put("/students/:id", async (req, res) => {
   }
 });
 
-////////////////// Delete students data/////////////////////////////////
+////////////////// Delete Customer data/////////////////////////////////
 
-router.delete("/students/:id", async (req, res) => {
+router.delete("/customer/:id", async (req, res) => {
   //   console.log(req);
   try {
     const id = req.params.id;
     // console.log(id);
-    const delteData = await Student.findByIdAndDelete(req.params.id);
+    const delteData = await Customer.findByIdAndDelete(req.params.id);
     if (!req.params.id) {
       return res.status(500).send("server Error");
     }
