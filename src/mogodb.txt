@@ -1,8 +1,6 @@
 Setup MogoDB 
 mogodb => "C:\Program Files\MongoDB\Server\5.0\bin/mongod.exe" --version       
 mongoEXE => "C:\Program Files\MongoDB\Server\5.0\bin/mongo.exe" --version          
-
-
 ########## for terminal for powershell#######################################
  mongo "mongodb+srv://studentsdemo.y2jgxd7.mongodb.net/studentsapi" --username santosh123
 
