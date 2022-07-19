@@ -3,6 +3,10 @@ const mongoose = require("mongoose");
 
 const customerSchema = new mongoose.Schema({
 
+  cloudnary_Pic_id: {
+    type: String
+  },
+
 firstName: {
     type: String,
     required: true,
@@ -33,6 +37,10 @@ firstName: {
   department: {
     type: String,
     required: true,
+  },
+  
+  profile_pic: {
+    type: String
   },
 
 });

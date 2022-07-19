@@ -1,21 +1,51 @@
 
 const express = require("express");
 const router = new express.Router();
+const cloudinary = require("../utils/cloudinary");
+const upload = require("../utils/multer");
 const Customer = require("../models/cutomer");
+const mongoose = require('mongoose');
 
-///////////// All http  method for using is async wait ///////////////////
 
-
-router.post("/customer", async (req, res) => {
-  try {
-    const user = new Customer(req.body);
+router.post("/customer",upload.single("profile_pic"), async (req, res,next) => {
+   try {
+       // Upload image to cloudinary
+   const result = await cloudinary.uploader.upload(req.file.path);
+     console.log(result)
+    const user = new Customer({
+    _id: new mongoose.Types.ObjectId,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    phone_Number:req.body.phone_Number,
+    dob: req.body.dob,
+    department: req.body.department,
+    profile_pic: result.secure_url,
+    cloudnary_Pic_id:result.public_id
+    });
     console.log(user);
     await user.save();
     res.status(201).send(user);
   } catch (error) {
     res.status(400).send(error);
+    console.log('errrrrrrrrrr',error);
+
   }
 });
+
+
+///////////// All http  method for using is async wait ///////////////////
+
+
+// router.post("/customer", async (req, res) => {
+//   try {
+//     const user = new Customer(req.body);
+//     console.log(user);
+//     await user.save();
+//     res.status(201).send(user);
+//   } catch (error) {
+//     res.status(400).send(error);
+//   }
+// });
 
 /////////////////////// get all Customer data//////////////// //
 
