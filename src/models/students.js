@@ -32,7 +32,7 @@ const StudentSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: 8,
-  }
+  },
 });
 
 ////////// We will create for Collection  data based Schema  for Models.///////////

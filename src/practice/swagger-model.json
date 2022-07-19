@@ -1,48 +1,46 @@
 {
-    
-"definitions": {
+  "definitions": {
     "StudentResponse": {
-        "type": "object",
-        "properties": {
-            "id": {
-                 "type": "integer"
-            },
-            "task": {
-                "type": "string"
-            },
-            "assignee": {
-                "type": "string"
-            },
-            "status": {
-                "type": "string"
-            }
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "task": {
+          "type": "string"
+        },
+        "assignee": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
         }
+      }
     },
     "Task": {
-        "type": "object",
-        "properties": {
-            "task": {
-                "type": "string"
-            },
-            "assignee": {
-                "type": "string"
-            },
-            "status": {
-                "type": "string"
-            }
+      "type": "object",
+      "properties": {
+        "task": {
+          "type": "string"
+        },
+        "assignee": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
         }
+      }
     },
     "InvalidResponse": {
-        "type": "object",
-        "properties": {
-            "statusCode": {
-                "type": "string"
-            },
-            "message": {
-                "type": "string"
-            }
+      "type": "object",
+      "properties": {
+        "statusCode": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
         }
-
+      }
     }
-}
+  }
 }

@@ -1,13 +1,11 @@
 const mongoose = require("mongoose");
 
-
 const customerSchema = new mongoose.Schema({
-
   cloudnary_Pic_id: {
-    type: String
+    type: String,
   },
 
-firstName: {
+  firstName: {
     type: String,
     required: true,
   },
@@ -38,17 +36,12 @@ firstName: {
     type: String,
     required: true,
   },
-  
-  profile_pic: {
-    type: String
-  },
 
+  profile_pic: {
+    type: String,
+  },
 });
 
+let customer = new mongoose.model("customer", customerSchema);
 
-
-let customer = new mongoose.model('customer',customerSchema)
-
-module.exports = customer
-
-
+module.exports = customer;
