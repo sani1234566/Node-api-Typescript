@@ -35,11 +35,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(RegisterRouter, studentRouter);
-
-app.use('/employee',customer);
-
-
+app.use(RegisterRouter, studentRouter,customer);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {customCss}));
 
 app.listen(port, () => {

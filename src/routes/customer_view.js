@@ -5,7 +5,7 @@ const upload = require("../utils/multer");
 const Customer = require("../models/cutomer");
 const mongoose = require("mongoose");
 
-router.post( "/",
+router.post( "/employee",
   upload.single("profile_pic"),
   async (req, res, next) => {
     try {
@@ -32,22 +32,9 @@ router.post( "/",
   }
 );
 
-///////////// All http  method for using is async wait ///////////////////
-// without pic method
-// router.post("/customer", async (req, res) => {
-//   try {
-//     const user = new Customer(req.body);
-//     console.log(user);
-//     await user.save();
-//     res.status(201).send(user);
-//   } catch (error) {
-//     res.status(400).send(error);
-//   }
-// });
-
 /////////////////////// get all Customer data//////////////// //
 
-router.get("/", async (req, res) => {
+router.get("/employee", async (req, res) => {
   // console.log("required",req)
   try {
     const users = await Customer.find();
@@ -60,7 +47,7 @@ router.get("/", async (req, res) => {
 
 /////////////////////// get Customer By Id data//////////////// //
 
-router.get("/:id", async (req, res) => {
+router.get("/employee/:id", async (req, res) => {
   try {
     // console.log(req.params.id);
     const users = await Customer.findById(req.params.id);
@@ -73,7 +60,7 @@ router.get("/:id", async (req, res) => {
 
 /////////////////////// get Customer By search by single Filelds key Id data//////////////// //
 
-router.get("/-search/:key", async (req, res) => {
+router.get("/employee-search/:key", async (req, res) => {
   try {
     // console.log(`search?query=${req.params.key}`);
     const users = await Customer.find({
@@ -93,7 +80,7 @@ router.get("/-search/:key", async (req, res) => {
 
 /////////////////////// get Customer By search querry for multiple filelds Id data//////////////// //
 
-router.get("/-query", async (req, res) => {
+router.get("/employee-query", async (req, res) => {
   try {
     let searchQuery = req.query;
     console.log("search? name=:", searchQuery);
@@ -108,7 +95,7 @@ router.get("/-query", async (req, res) => {
 
 ////////////////// update Customer for patch value prefix filelds data/////////////////////////////////
 
-router.patch("/:id", async (req, res) => {
+router.patch("/employee/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const update = await Customer.findByIdAndUpdate(id, req.body, {
@@ -123,7 +110,7 @@ router.patch("/:id", async (req, res) => {
 
 ////////////////// update Customer for put value prefix filelds data/////////////////////////////////
 
-router.put("/:id", async (req, res) => {
+router.put("/employee/:id", async (req, res) => {
   try {
     const id = req.params.id;
     console.log(req.params);
@@ -138,7 +125,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.put("/:id", upload.single("profile_pic"), async (req, res) => {
+router.put("/employee/:id", upload.single("profile_pic"), async (req, res) => {
   try {
     let user = await Customer.findById(req.params.id);
     // Delete image from cloudinary
@@ -166,7 +153,7 @@ router.put("/:id", upload.single("profile_pic"), async (req, res) => {
 
 ////////////////// Delete Customer data/////////////////////////////////
 
-router.delete("/:id", async (req, res) => {
+router.delete("/employee/:id", async (req, res) => {
   //   console.log(req);
   try {
     const id = req.params.id;
