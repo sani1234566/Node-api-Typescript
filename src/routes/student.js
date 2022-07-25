@@ -1,17 +1,96 @@
 const express = require("express");
 const router = new express.Router();
 const Student = require("../models/students");
+const multer = require('multer');
+
+// // now using profile pic uploads ///////////////////
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, './uploads/');
+  },
+  filename: function(req, file, cb) {
+    cb(null, new Date().toISOString() + file.originalname);
+  }
+});
+
+const fileFilter = (req, file, cb) => {
+  // reject a file
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5
+  },
+  fileFilter: fileFilter
+});
+
+// // now using profile pic uploads ///////////////////
+
 
 ///////////// All http  method for using is async wait ///////////////////
+
+router.post("/students-pic",upload.single('profile_pic'),async (req, res) => {
+  console.log('files',req.file);
+  try {
+    const user = new Student({
+      _id: new mongoose.Types.ObjectId(),
+        name: req.body.name,
+        email_Id:req.body.email_Id,
+        phone_Number: req.body.phone_Number,
+        address: req.body.address,
+        profile_pic:req.file.path 
+    });
+    console.log(user);
+    await user.save();
+    res.status(201).send({
+      success:true,
+      message:"students created succefully",
+      data:user,
+      profile_pic: {
+          name: req.name,
+          email_Id: req.email_Id,
+          phone_Number: req.phone_Number,
+          address: req.address,
+          _id: req._id,
+        request: {
+            type: 'GET',
+            url: "http://localhost:3000/students/" + req._id
+        },
+      },
+    });
+  } catch (error) {
+    res.status(400).send({
+      success:false,
+      message:error,
+      data:[]
+    });
+  }
+});
+
+
 
 router.post("/students", async (req, res) => {
   try {
     const user = new Student(req.body);
     // console.log(user);
     await user.save();
-    res.status(201).send(user);
+    res.status(201).send({
+      success:true,
+      message:"students created succefully",
+      data:user
+    });
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400).send({
+      success:false,
+      message:error,
+      data:[]
+    });
   }
 });
 
@@ -22,9 +101,17 @@ router.get("/students", async (req, res) => {
   try {
     const users = await Student.find();
     // console.log("get", users);
-    res.status(200).send(users);
+    res.status(201).send({
+      success:true,
+      message:"students details found.",
+      data:users
+    });
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).send({
+      success:false,
+      message:"students details not Found ",
+      data:user
+    });
   }
 });
 
@@ -35,9 +122,17 @@ router.get("/students/:id", async (req, res) => {
     // console.log(req.params.id);
     const users = await Student.findById(req.params.id);
     // console.log("get", users);
-    res.status(200).send(users);
+    res.status(200).send({
+      success:true,
+      message:"students details found.",
+      data:users
+    });
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).send({
+      success:false,
+      message:"students details not Found ",
+      data:[]
+    });
   }
 });
 
@@ -85,7 +180,11 @@ router.patch("/students/:id", async (req, res) => {
       new: true,
     });
     // console.log(update);
-    res.send(update).status(201);
+    res.status(201).send({
+      success:true,
+      message:"students Details update succefully",
+      data:update
+    });
   } catch (error) {
     res.status(404).send(error);
   }
@@ -102,7 +201,11 @@ router.put("/students/:id", async (req, res) => {
       { $set: req.body }
     );
     console.log(update);
-    res.send(update).status(201);
+    res.status(201).send({
+      success:true,
+      message:"students Details update succefully",
+      data:update
+    });;
   } catch (error) {
     res.status(404).send(error);
   }
@@ -119,9 +222,17 @@ router.delete("/students/:id", async (req, res) => {
     if (!req.params.id) {
       return res.status(500).send("server Error");
     }
-    res.send(delteData).status(200);
+    res.send({
+      success:true,
+      message:"students deleted succefully",
+      data:delteData
+    }).status(200);
   } catch (error) {
-    res.send(error).status(400);
+    res.send({
+      success:false,
+      message:"students Id is Not matched",
+      data:[]
+    }).status(400);
   }
 });
 

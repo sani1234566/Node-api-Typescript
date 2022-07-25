@@ -6,14 +6,17 @@ require("./src/db/dbLocal_conn");
 fs = require('fs');
 const studentRouter = require("./src/routes/student");
 const RegisterRouter = require("./src/routes/Register");
+const EmployeeRouter = require("./src/routes/employee_view");
+
 const cookieParser = require("cookie-parser");
 const app = express();
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 const customCss = fs.readFileSync((process.cwd()+"/swagger.css"), 'utf8');
 const cors = require('cors');
-const bodyParser = require('body-parser');
-const customer = require("./src/routes/customer_view");
+const csrf = require('csurf');
+
+app.use(cors());
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Methods", "*");
     res.header("Access-Control-Allow-Origin", "*");
@@ -26,17 +29,21 @@ app.use(function (req, res, next) {
         next();
     }
 });
-app.use(cors());
-
+const bodyParser = require('body-parser');
+const customer = require("./src/routes/customer_view");
+// const csrfProtection = csrf()
 
 // console.log("secrekKey",process.env.SECRET_KEY);
-
-app.use(express.json());
-app.use(cookieParser());
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(RegisterRouter, studentRouter,customer);
+app.use(cookieParser());
+app.use(express.json());
+app.use(bodyParser.json());
+// app.use(csrfProtection);
+
+app.use(RegisterRouter, studentRouter ,customer,EmployeeRouter);
+
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {customCss}));
+
 
 app.listen(port, () => {
   console.log(

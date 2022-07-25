@@ -3,6 +3,8 @@ const express = require("express");
 const router = new express.Router();
 const RegisterSchema = require("../models/registers");
 const auth = require("../middleware/auth");
+const bcrypt = require("bcryptjs");
+const  CryptoJS = require("crypto-js");
 
 router.post("/signup", async (req, res) => {
   try {
@@ -18,21 +20,18 @@ router.post("/signup", async (req, res) => {
         password: pass,
         confirm_password: cpass,
       });
+      // const token = await userRegistion.AuthGenerateToken();
+      // console.log("token data", token);
+      // console.log(userRegistion);
 
-      const token = await userRegistion.AuthGenerateToken();
-      console.log("token data", token);
-
-      console.log(userRegistion);
       const savedb = await userRegistion.save();
       console.log("page data ", savedb);
-
       // now get cookies for token through
-      res.cookie("jwt", token, {
-        expires: new Date(Date.now() + 30000),
-        httpOnly: true,
-      });
-      console.log("Cookies data ", cookie);
-
+      // res.cookie("jwt", token, {
+      //   expires: new Date(Date.now() + 30000),
+      //   httpOnly: true,
+      // });
+      // console.log("Cookies data ", cookie);
       res.status(201).send(userRegistion);
     } else {
       res.send("Your passwword are Not matching").status(404);
@@ -47,18 +46,47 @@ router.get("/signup", async (req, res) => {
   try {
     const users = await RegisterSchema.find();
     // console.log("get", users);
-    res.status(200).send(users);
+    res.status(200).send({
+      success:true,
+      message:"get users Deatils",
+      data:users
+    });
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).send({
+      success:false,
+      message:"users Deatils not Found",
+      data:[]
+    });
   }
 });
+
+
+router.get("/reset-password", async (req, res) => {
+  // console.log("required",req)
+  try {
+    const users = await RegisterSchema.find();
+    // console.log("get", users);
+    res.status(200).send({
+      success:true,
+      message:"password update Succefully",
+      data:users
+    });
+  } catch (error) {
+    res.status(500).send({
+      success:false,
+      message:"password is not matching",
+      data:[]
+    });
+  }
+});
+
 
 router.post("/login", async (req, res) => {
   // console.log("Email: jitendra@gmail.com", req.body.email);
   try {
-    const emails = req.body.email;
+    const email = req.body.email;
     const pass = req.body.password;
-    console.log(`Email id is ${emails} and password is ${pass}`);
+    console.log(`Email id is ${email} and password is ${pass}`);
     const userCredentials = await RegisterSchema.findOne({ email: email });
     console.log(userCredentials);
     console.log("password", userCredentials.password);
@@ -68,25 +96,38 @@ router.post("/login", async (req, res) => {
     console.log("Match password", isMatchHasPass);
     const token = await userCredentials.AuthGenerateToken();
     console.log("token data", token);
-    res.cookie("jwt", token, {
-      expires: new Date(Date.now() + 60000),
-      httpOnly: true,
-      // secure:true  for using https service secure mode
-    });
-    console.log("Cookies data ", cookie);
-    console.log("Cookies get data ", req.cookies.jwt);
+
+    // res.cookie("jwt", token, {
+    //   expires: new Date(Date.now() + 60000),
+    //   httpOnly: true,
+    //   // secure:true  for using https service secure mode
+    // });
+    // console.log("Cookies data ", cookie);
+    // console.log("Cookies get data ", req.cookies.jwt);
+
     if (isMatchHasPass) {
-      res.status(201).send("Login is succesfully");
+      res.status(201).send({
+        success:true,
+        message:"Login is succesfully",
+      });;
     } else {
-      res.send("Invalid Password Details");
+      res.status(401).send({
+        success:false,
+        message:"Invalid Login Details",
+        data:[]
+      });
     }
   } catch (error) {
-    res.status(400).send("Invalid Login Details" + error);
+    res.status(400).send({
+      success:false,
+      message:"Invalid Login Details",
+      data:[]
+    });
+    console.log('login error',error)
   }
 });
 
 router.get("/logout", auth, async (req, res) => {
-  alert();
   try {
     // 1)  particular data base remove token with using auth midddleware for multiple device
     req.user.tokens = req.user.tokens.filter((item) => {

@@ -1,8 +1,15 @@
 Setup MogoDB 
 mogodb => "C:\Program Files\MongoDB\Server\5.0\bin/mongod.exe" --version       
 mongoEXE => "C:\Program Files\MongoDB\Server\5.0\bin/mongo.exe" --version          
+
+
 ########## for terminal for powershell#######################################
  mongo "mongodb+srv://studentsdemo.y2jgxd7.mongodb.net/studentsapi" --username santosh123
+
+####################### CLUSTERDB#######################
+
+CLUSTER_DB = "mongodb+srv://test123:pal123@$cluster0.bjxrmbt.mongodb.net/demodb?retryWrites=true&w=majority"
+SECRET_KEY ="YOURjhfdhkghkdfghkhdghkhSECURITY_KEY"
 
  mongodb+srv://santosh123:pal123@demodb.wa1hik2.mongodb.net/demodb
 

@@ -6,7 +6,7 @@ const auth = async (req, res, next) => {
     const token = req.cookies.jwt;
     const verifyuser = jwt.verify(token, env.process.SECRET_KEY);
     console.log("verifyuser..", verifyuser);
-    const user = await RegisterSchema.findOne({ id: verifyuser._id });
+    const user = await RegisterSchema.findOne({id:verifyuser._id});
     console.log("user..", user);
     req.token = token;
     req.user = user;
