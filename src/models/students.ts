@@ -1,8 +1,6 @@
-const mongoose = require("mongoose");
-const validator = require("validator");
-
+import  mongoose from "mongoose";
+import  validator from "validator";
 const StudentSchema = new mongoose.Schema({
-
 
   name: {
     type: String,

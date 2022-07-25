@@ -1,4 +1,4 @@
-const nodemailer = require('nodemailer');
+import nodemailer from 'nodemailer';
 
 const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
@@ -21,7 +21,7 @@ const options = {
     // to: 'akanksha.mightquite@gmail.com',
     to: 'palsantosh1698@gmail.com',   // list of receivers
        // list of receivers
-    subject: 'Sending Email using Node.js',
+    subject: 'Sending Email using Node.ts',
     text: 'That was easy!',
     html: `<b>Hey there! </b>
                  <br> This is our first message sent with Nodemailer<br/>`,

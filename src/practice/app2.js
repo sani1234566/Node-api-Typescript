@@ -5,7 +5,7 @@ require("../db/conn");
 const Student = require("../models/students");
 
 const app = express();
-app.use(express.json());
+app.use(express.tson());
 
 ///////////// All http  method for using is async wait ///////////////////
 

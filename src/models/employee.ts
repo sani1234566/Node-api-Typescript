@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import  mongoose from "mongoose";
 
 const employeeSchema = new mongoose.Schema({
 
@@ -63,6 +63,6 @@ const employeeSchema = new mongoose.Schema({
   },
 });
 
-let emp = new mongoose.model("employee", employeeSchema);
+let Customer =  mongoose.model("employee", employeeSchema);
 
-module.exports = emp;
+export {Customer}

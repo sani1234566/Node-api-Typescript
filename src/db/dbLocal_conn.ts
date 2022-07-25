@@ -1,13 +1,13 @@
-const mongoose = require("mongoose");
+import  mongoose from "mongoose";
 
-const DataBase = process.env.DATABASE_KEY;
+const DataBase:any = process.env.DATABASE_KEY;
 
 const cluSterDb = process.env.CLUSTER_DB;
 
 mongoose
   .connect(DataBase, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+    // useNewUrlParser: true,
+    // useUnifiedTopology: true,
   })
   .then(() => {
     console.log(`Good Job Your Data Base connection is Success. ${DataBase}`);

@@ -1,7 +1,7 @@
-const express = require("express");
+import express from 'express';
 const router = new express.Router();
-const Student = require("../models/students");
-const multer = require('multer');
+import Student from "../models/students";
+import  multer from 'multer';
 
 // // now using profile pic uploads ///////////////////
 const storage = multer.diskStorage({

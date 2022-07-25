@@ -7,7 +7,7 @@ module.exports = (req,res,next) =>{
         console.log(verify);
       next();
     } catch (error) {
-      res.status(401).json({
+      res.status(401).tson({
         error:"Invalid Token"
       })  
     }

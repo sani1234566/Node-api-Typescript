@@ -1,10 +1,10 @@
-const express = require("express");
-const router = new express.Router();
-const cloudinary = require("../utils/cloudinary");
-const upload = require("../utils/multer");
-const Customer = require("../models/employee");
-const mongoose = require("mongoose");
-const auth = require("../middleware/auth");
+import express from 'express';
+import  mongoose from "mongoose";
+const router =  express.Router();
+import cloudinary from "../utils/cloudinary";
+import  upload from "../utils/multer";
+import * as  Customer from "../models/employee";
+// import auth from "../middleware/auth";
 
 router.post( "/employee",upload.single('photo'), async (req, res, next) => {
     try {
@@ -38,20 +38,20 @@ router.post( "/employee",upload.single('photo'), async (req, res, next) => {
 
 /////////////////////// get all Customer data//////////////// //
 
-router.get("/employee", async (req, res) => {
-  // console.log("required",req)
-  try {
-   const {page = 1,limit = 10} = req.query;
-    const posts = await Customer.find()
-        .limit(limit *1).skip((page -1) *limit);
-    res.status(200).send({
-    total:posts.length,
-     data:posts
-    });
-  } catch (error) {
-    res.status(500).send(error);
-  }
-});
+// router.get("/employee", async (req, res) => {
+//   // console.log("required",req)
+//   try {
+//    const {page = 1, limit = 10} = req.query;
+//     const posts = await Customer.find()
+//         .limit(limit *1).skip((page -1) *limit);
+//     res.status(200).send({
+//     total:posts.length,
+//      data:posts
+//     });
+//   } catch (error) {
+//     res.status(500).send(error);
+//   }
+// });
 
 /////////////////////// get Customer By Id data//////////////// //
 
@@ -135,7 +135,7 @@ router.put("/employee/:id", async (req, res) => {
 
 router.put("/employee/:id", upload.single("profile_pic"), async (req, res) => {
   try {
-    let user = await Customer.findById(req.params.id);
+    let user:any = await Customer.findById(req.params.id);
     // Delete image from cloudinary
     await cloudinary.uploader.destroy(user.cloudnary_Pic_id);
     // Upload image to cloudinary
@@ -150,10 +150,10 @@ router.put("/employee/:id", upload.single("profile_pic"), async (req, res) => {
       profile_pic: result.secure_url || user.profile_pic,
       cloudnary_Pic_id: result.public_id || user.cloudnary_Pic_id,
     };
-    user = await User.findByIdAndUpdate(req.params.id, data, {
+   let user2:any= await User.findByIdAndUpdate(req.params.id, data, {
       new: true,
     });
-    res.json(user);
+    res.json(user2);
   } catch (err) {
     console.log(err);
   }
@@ -177,5 +177,7 @@ router.delete("/employee/:id", async (req, res) => {
   }
 });
 
-module.exports = router;
+
+export {router}
+
 
